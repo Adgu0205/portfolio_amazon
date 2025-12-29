@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/tab.png" />
+    <!-- Montserrat font is loaded locally from src/Montserrat/static -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aditya-Gupta</title>
+  </head>
+  <body>
+    <!-- Hidden static form so Netlify detects the form at build time -->
+    <form name="contact" data-netlify="true" netlify style="display: none">
+      <input type="hidden" name="form-name" value="contact" />
+      <input name="name" />
+      <input name="email_or_phone" />
+      <textarea name="message"></textarea>
+    </form>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
