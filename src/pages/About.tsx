@@ -100,7 +100,7 @@ export default function About() {
               Consistently curious and committed to growth, I'm driven by a passion for building meaningful digital experiences and understanding the systems that power them. I enjoy exploring modern web technologies, solving real-world problems through code, and refining my craft one project at a time.
             </p>
             <DecryptText text="Learn. Build. Improve." delay={10} />
-            <a href="/aditya resume.pdf" download="Aditya_Gupta_Resume.pdf" className="download-resume-btn">
+            <a href="/Aditya Gupta.pdf" download="Aditya_Gupta_Resume.pdf" className="download-resume-btn">
               Download Resume
             </a>
           </div>
