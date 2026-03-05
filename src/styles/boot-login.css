@@ -1,0 +1,296 @@
+/* Boot & Login Screens */
+.boot-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    color: white;
+}
+
+.boot-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.xp-logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.xp-squares {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 3px;
+    width: 80px;
+    height: 80px;
+    transform: skew(-15deg) rotate(5deg);
+}
+
+.sq {
+    border-radius: 2px;
+}
+
+.sq-tl {
+    background: #f65314;
+    border-top-left-radius: 10px;
+}
+
+.sq-tr {
+    background: #7cbb00;
+}
+
+.sq-bl {
+    background: #00a1f1;
+}
+
+.sq-br {
+    background: #ffbb00;
+    border-bottom-right-radius: 10px;
+}
+
+.boot-title {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+}
+
+.boot-brand {
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.boot-xp {
+    font-size: 36px;
+    color: #f65314;
+    font-weight: bold;
+    vertical-align: super;
+}
+
+.boot-subtitle {
+    font-size: 20px;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.boot-loader-container {
+    width: 150px;
+    height: 12px;
+    border: 1px solid white;
+    border-radius: 3px;
+    margin-top: 30px;
+    padding: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.boot-loader-bar {
+    height: 100%;
+    width: 30px;
+    background: linear-gradient(to bottom, #7a93ff 0%, #0022d8 100%);
+    animation: bootload 2.5s infinite linear;
+}
+
+@keyframes bootload {
+    0% {
+        transform: translateX(-40px);
+    }
+
+    100% {
+        transform: translateX(160px);
+    }
+}
+
+.boot-footer {
+    position: absolute;
+    bottom: 20px;
+    left: 30px;
+    right: 30px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.boot-f-right {
+    font-size: 24px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.boot-f-right .reg {
+    font-size: 10px;
+    vertical-align: super;
+}
+
+/* Login Screen */
+.login-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #5a7edc;
+    z-index: 99998;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-top-band,
+.login-bottom-band {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: #325bc1;
+    z-index: -1;
+}
+
+.login-top-band {
+    top: 0;
+    border-bottom: 2px solid #5a7edc;
+    background: #325bc1;
+    opacity: 0.8;
+}
+
+.login-bottom-band {
+    bottom: 0;
+    border-top: 1px solid #7398f6;
+    background: #2f4ba1;
+}
+
+.login-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    width: 100%;
+    padding: 0 50px;
+}
+
+.login-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    color: white;
+    text-align: right;
+    width: 40%;
+}
+
+.login-left .boot-title {
+    margin-top: -10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.login-text {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.login-divider {
+    width: 1px;
+    height: 250px;
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.8), transparent);
+}
+
+.login-right {
+    width: 40%;
+    display: flex;
+    align-items: center;
+}
+
+.login-user-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    color: white;
+}
+
+.login-user-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transform: scale(1.02);
+}
+
+.login-user-card:active {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(0.98);
+}
+
+.login-avatar {
+    width: 60px;
+    height: 60px;
+    border: 3px solid white;
+    border-radius: 5px;
+    object-fit: cover;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.login-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.login-role {
+    font-size: 14px;
+    color: #ffcc00;
+}
+
+.login-footer-bar {
+    position: absolute;
+    bottom: 20px;
+    left: 30px;
+    right: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    color: white;
+}
+
+.login-restart {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.login-restart:hover {
+    text-decoration: underline;
+}
+
+.restart-icon {
+    width: 24px;
+    height: 24px;
+    background: #cc3300;
+    border-radius: 3px;
+    border: 1px solid white;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.login-instructions {
+    text-align: right;
+    font-size: 12px;
+    color: #c9dbff;
+}
