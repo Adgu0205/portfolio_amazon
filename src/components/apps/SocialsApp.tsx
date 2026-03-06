@@ -4,7 +4,7 @@ import MagnetLines from '../MagnetLines';
 const tiles = [
     { id: 1, title: 'LinkedIn', link: 'https://www.linkedin.com/in/aditya-gupta-a6196129a/', image: linkedin },
     { id: 2, title: 'GitHub', link: 'https://github.com/Adgu0205', image: github },
-    { id: 3, title: 'LeetCode', link: 'https://leetcode.com/u/axMujZfCdW/', image: leetcode },
+    { id: 3, title: 'LeetCode', link: 'https://leetcode.com/u/adityagupta0205/', image: leetcode },
     { id: 4, title: 'Instagram\n(Main)', link: 'https://www.instagram.com/adityaaguptaaaa/', image: mainJpeg },
     { id: 5, title: 'Instagram\n(Creator)', link: 'https://www.instagram.com/diecastsaregood/', image: reelJpeg },
 ];

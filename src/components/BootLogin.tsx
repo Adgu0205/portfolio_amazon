@@ -51,6 +51,12 @@ export const BootScreen = ({ onComplete }: { onComplete: () => void }) => {
 };
 
 export const LoginScreen = ({ onLogin }: { onLogin: () => void }) => {
+    const handleLoginClick = () => {
+        const audio = new Audio('/windows-xp-startup.mp3');
+        audio.play().catch(e => console.log('Audio play failed:', e));
+        onLogin();
+    };
+
     return (
         <motion.div
             className="login-screen"
@@ -69,13 +75,13 @@ export const LoginScreen = ({ onLogin }: { onLogin: () => void }) => {
                         <span className="boot-brand">AdityaGupta</span>
                         <span className="boot-xp">xp</span>
                     </div>
-                    <div className="login-text">To begin, click on Aditya Gupta to log in</div>
+                    <div className="login-text">To begin, click on Aditya Gupta</div>
                 </div>
 
                 <div className="login-divider" />
 
                 <div className="login-right">
-                    <div className="login-user-card" onClick={onLogin}>
+                    <div className="login-user-card" onClick={handleLoginClick}>
                         <img src={aditya} alt="Aditya" className="login-avatar" />
                         <div className="login-user-info">
                             <div className="login-name">Aditya Gupta</div>
@@ -86,10 +92,6 @@ export const LoginScreen = ({ onLogin }: { onLogin: () => void }) => {
             </div>
 
             <div className="login-footer-bar">
-                <div className="login-restart">
-                    <div className="restart-icon"></div>
-                    <span>Turn Off Computer</span>
-                </div>
                 <div className="login-instructions">
                     After you log on, the system's yours to explore.<br />
                     Every detail has been designed with a purpose.

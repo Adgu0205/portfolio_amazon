@@ -31,7 +31,6 @@ body {
   width: 100vw;
   height: calc(100vh - 40px);
   /* Leave room for taskbar */
-  background-color: #000;
   z-index: 0;
 }
 
@@ -56,7 +55,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 70px;
+  width: 90px;
   padding: 5px;
   margin: 10px;
   cursor: pointer;
@@ -69,8 +68,8 @@ body {
 }
 
 .desktop-icon img {
-  width: 32px;
-  height: 32px;
+  width: 56px;
+  height: 56px;
   margin-bottom: 5px;
   pointer-events: none;
 }
@@ -78,7 +77,7 @@ body {
 .desktop-icon span {
   color: white;
   text-shadow: 1px 1px 2px black;
-  font-size: 11px;
+  font-size: 14px;
   text-align: center;
   pointer-events: none;
 }
@@ -234,7 +233,7 @@ body {
   position: absolute;
   bottom: 40px;
   left: 0;
-  width: 320px;
+  width: 440px;
   background-color: white;
   border: 2px solid var(--xp-blue);
   border-top-right-radius: 5px;
@@ -277,14 +276,14 @@ body {
 }
 
 .start-menu-left {
-  flex: 1;
+  flex: 5;
   background-color: white;
   padding: 5px;
   border-right: 1px solid #d3d3d3;
 }
 
 .start-menu-right {
-  flex: 1;
+  flex: 4;
   background-color: #d1e4fb;
   padding: 5px;
 }

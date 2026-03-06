@@ -15,6 +15,8 @@ import ProjectsApp from './components/apps/ProjectsApp';
 import SocialsApp from './components/apps/SocialsApp';
 import ResumeApp from './components/apps/ResumeApp';
 import CertificatesApp from './components/apps/CertificatesApp';
+import MusicApp from './components/apps/MusicApp';
+import ContactApp from './components/apps/ContactApp';
 
 import DesktopBackground from './components/DesktopBackground';
 
@@ -26,6 +28,7 @@ export interface AppWindow {
 	isOpen: boolean;
 	isFocused: boolean;
 	isMaximized: boolean;
+	isMinimized: boolean;
 	component: React.ReactNode;
 	defaultSize?: { width: number; height: number };
 }
@@ -42,6 +45,7 @@ function App() {
 			isOpen: false,
 			isFocused: false,
 			isMaximized: false,
+			isMinimized: false,
 			component: <AboutApp />,
 			defaultSize: { width: 1050, height: 650 }
 		},
@@ -52,6 +56,7 @@ function App() {
 			isOpen: false,
 			isFocused: false,
 			isMaximized: false,
+			isMinimized: false,
 			component: <ProjectsApp />,
 			defaultSize: { width: 900, height: 700 }
 		},
@@ -62,6 +67,7 @@ function App() {
 			isOpen: false,
 			isFocused: false,
 			isMaximized: false,
+			isMinimized: false,
 			component: <SocialsApp />,
 			defaultSize: { width: 1150, height: 650 }
 		},
@@ -72,6 +78,7 @@ function App() {
 			isOpen: false,
 			isFocused: false,
 			isMaximized: false,
+			isMinimized: false,
 			component: <ResumeApp />,
 			defaultSize: { width: 680, height: 850 }
 		},
@@ -82,8 +89,31 @@ function App() {
 			isOpen: false,
 			isFocused: false,
 			isMaximized: false,
+			isMinimized: false,
 			component: <CertificatesApp />,
 			defaultSize: { width: 900, height: 750 }
+		},
+		{
+			id: 'musicplayer',
+			title: 'Music Player',
+			icon: 'https://win98icons.alexmeub.com/icons/png/cd_audio_cd_a-3.png',
+			isOpen: false,
+			isFocused: false,
+			isMaximized: false,
+			isMinimized: false,
+			component: <MusicApp />,
+			defaultSize: { width: 440, height: 260 }
+		},
+		{
+			id: 'contact',
+			title: 'Contact Me',
+			icon: 'https://win98icons.alexmeub.com/icons/png/outlook_express-4.png',
+			isOpen: false,
+			isFocused: false,
+			isMaximized: false,
+			isMinimized: false,
+			component: <ContactApp />,
+			defaultSize: { width: 520, height: 420 }
 		}
 	]);
 
@@ -105,25 +135,22 @@ function App() {
 		zIndexCounter.current += 1;
 		setWindows(prev => prev.map(w => {
 			if (w.id === id) {
-				return { ...w, isOpen: true, isFocused: true };
+				return { ...w, isOpen: true, isFocused: true, isMinimized: false };
 			}
 			return { ...w, isFocused: false };
 		}));
 	};
 
 	const closeWindow = (id: string) => {
-		setWindows(prev => prev.map(w => w.id === id ? { ...w, isOpen: false, isFocused: false } : w));
+		setWindows(prev => prev.map(w => w.id === id ? { ...w, isOpen: false, isFocused: false, isMinimized: false } : w));
 	};
 
 	const toggleMinimize = (id: string) => {
 		setWindows(prev => prev.map(w => {
 			if (w.id === id) {
-				// Simple toggle for now, in a real OS minimize hides the window frame entirely
-				// Here we'll treat it like closing it visually but keeping it in taskbar, but we need
-				// a complex state. For simplicity, we'll just unfocus it and let it stay. 
-				// Let's actually hide it by setting isOpen false temporarily, or tracking isMinimized.
-				// For now, let's keep it simple: closing minimizes it to taskbar.
-				return { ...w, isOpen: false, isFocused: false };
+				// We set isMinimized to true and remove focus so it hides from view
+				// but retains isOpen=true so the component logic isn't destroyed
+				return { ...w, isMinimized: true, isFocused: false };
 			}
 			return w;
 		}));
@@ -133,7 +160,7 @@ function App() {
 		zIndexCounter.current += 1;
 		setWindows(prev => prev.map(w => {
 			if (w.id === id) {
-				return { ...w, isMaximized: !w.isMaximized, isFocused: true };
+				return { ...w, isMaximized: !w.isMaximized, isFocused: true, isMinimized: false };
 			}
 			return { ...w, isFocused: false };
 		}));
@@ -143,7 +170,8 @@ function App() {
 		zIndexCounter.current += 1;
 		setWindows(prev => prev.map(w => {
 			if (w.id === id) {
-				return { ...w, isFocused: true };
+				// If we focus it, make sure it's un-minimized just in case
+				return { ...w, isFocused: true, isMinimized: false };
 			}
 			return { ...w, isFocused: false };
 		}));
@@ -153,9 +181,17 @@ function App() {
 		const win = windows.find(w => w.id === id);
 		if (!win) return;
 
-		if (win.isOpen && win.isFocused) {
-			// Ignore or minimize
-			toggleMinimize(id);
+		if (win.isOpen) {
+			if (win.isFocused && !win.isMinimized) {
+				// Already focused and visible: minimize it
+				toggleMinimize(id);
+			} else if (win.isMinimized) {
+				// Minimized: restore and focus it
+				focusWindow(id);
+			} else {
+				// Open but just not focused: focus it
+				focusWindow(id);
+			}
 		} else {
 			openWindow(id);
 		}
@@ -175,29 +211,22 @@ function App() {
 						{/* Desktop Background */}
 						<div className="desktop-bg" onPointerDown={() => setWindows(prev => prev.map(w => ({ ...w, isFocused: false })))}>
 							<DesktopBackground />
-							{/* Desktop Icons */}
-							<div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap', height: '100%', alignContent: 'flex-start', padding: 10, position: 'relative', zIndex: 1 }}>
-								{windows.map(app => (
-									<div
-										key={`icon-${app.id}`}
-										className="desktop-icon"
-										onDoubleClick={(e) => { e.stopPropagation(); openWindow(app.id); }}
-										onTouchEnd={(e) => { e.stopPropagation(); openWindow(app.id); }} // Simple touch support
-									>
-										<img src={app.icon} alt={app.title} />
-										<span>{app.title}</span>
-									</div>
-								))}
 
-								{/* CRT Toggle Icon */}
-								<div
-									className="desktop-icon"
-									onDoubleClick={(e) => { e.stopPropagation(); setCrtEnabled(!crtEnabled); }}
-									onTouchEnd={(e) => { e.stopPropagation(); setCrtEnabled(!crtEnabled); }}
-								>
-									<img src="https://win98icons.alexmeub.com/icons/png/display_properties-2.png" alt="Toggle CRT" />
-									<span>Toggle CRT</span>
-								</div>
+							{/* Selected Desktop Icons */}
+							<div style={{ display: 'flex', flexDirection: 'column', flexWrap: 'wrap', height: '100%', alignContent: 'flex-start', padding: 10, position: 'relative', zIndex: 1 }}>
+								{windows
+									.filter(app => ['about', 'projects', 'resume', 'socials', 'certificates', 'contact'].includes(app.id))
+									.map(app => (
+										<div
+											key={`icon-${app.id}`}
+											className="desktop-icon"
+											onDoubleClick={(e) => { e.stopPropagation(); openWindow(app.id); }}
+											onTouchEnd={(e) => { e.stopPropagation(); openWindow(app.id); }}
+										>
+											<img src={app.icon} alt={app.title} />
+											<span>{app.title}</span>
+										</div>
+									))}
 							</div>
 						</div>
 
@@ -211,6 +240,7 @@ function App() {
 								isOpen={app.isOpen}
 								isFocused={app.isFocused}
 								isMaximized={app.isMaximized}
+								isMinimized={app.isMinimized}
 								onClose={closeWindow}
 								onMinimize={toggleMinimize}
 								onMaximize={toggleMaximize}
@@ -225,7 +255,15 @@ function App() {
 						{/* Start Menu */}
 						{isStartMenuOpen && (
 							<StartMenu
-								onClose={() => setStartMenuOpen(false)}
+								windows={windows}
+								onOpenApp={(id) => {
+									openWindow(id);
+									setStartMenuOpen(false);
+								}}
+								onToggleCrt={() => {
+									setCrtEnabled(!crtEnabled);
+									setStartMenuOpen(false);
+								}}
 								onLogOff={() => {
 									setStartMenuOpen(false);
 									setSystemState('login');

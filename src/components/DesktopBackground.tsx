@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { textPng } from '../images';
+import { textPng, backJpg } from '../images';
 import '../App.css';
 
 const DesktopBackground: React.FC = () => {
@@ -100,14 +100,49 @@ const DesktopBackground: React.FC = () => {
     }, []);
 
     return (
-        <div className="container" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }}>
-            <span className="engineer-text">&lt;  Computer Science Engineer  &gt;</span>
-            {textPng ? (
-                <img src={textPng} alt="Centered Text" className="text-image" />
-            ) : null}
-            <div className="overlay" aria-hidden>
-                <span ref={refA} className="morph-text" />
-                <span ref={refB} className="morph-text" />
+        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
+            {/* Background image - lowest layer, sits behind everything */}
+            <img
+                src={backJpg}
+                alt=""
+                style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    objectPosition: 'center center',
+                    zIndex: 0,
+                    pointerEvents: 'none',
+                }}
+            />
+            {/* Text content layer - above background */}
+            <div
+                className="container"
+                style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    pointerEvents: 'none',
+                    zIndex: 1,
+                }}
+            >
+                <span className="engineer-text">{'<  Computer Science Engineer  >'}</span>
+                {textPng ? (
+                    <img
+                        src={textPng}
+                        alt="Centered Text"
+                        className="text-image"
+                        style={{ position: 'relative', zIndex: 2 }}
+                    />
+                ) : null}
+                <div className="overlay" aria-hidden style={{ position: 'relative', zIndex: 3 }}>
+                    <span ref={refA} className="morph-text" />
+                    <span ref={refB} className="morph-text" />
+                </div>
             </div>
         </div>
     );

@@ -9,6 +9,7 @@ export interface WindowFrameProps {
     isOpen: boolean;
     isFocused: boolean;
     isMaximized: boolean;
+    isMinimized: boolean;
     onClose: (id: string) => void;
     onMinimize: (id: string) => void;
     onMaximize: (id: string) => void;
@@ -26,6 +27,7 @@ const WindowFrame: React.FC<WindowFrameProps> = ({
     isOpen,
     isFocused,
     isMaximized,
+    isMinimized,
     onClose,
     onMinimize,
     onMaximize,
@@ -53,6 +55,7 @@ const WindowFrame: React.FC<WindowFrameProps> = ({
             width: '100vw',
             height: 'calc(100vh - 40px)',
             zIndex,
+            ...(isMinimized ? { display: 'none' as const } : {}),
         }
         : {
             top: 0,
@@ -60,6 +63,7 @@ const WindowFrame: React.FC<WindowFrameProps> = ({
             width: defaultSize.width,
             height: defaultSize.height,
             zIndex,
+            ...(isMinimized ? { display: 'none' as const } : {}),
         };
 
     return (
