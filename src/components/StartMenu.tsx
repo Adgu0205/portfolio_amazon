@@ -9,12 +9,12 @@ interface StartMenuProps {
 }
 
 const XPLogo = () => (
-    <div className="xp-logo-container" style={{ transform: 'scale(0.5)', margin: 0 }}>
-        <div className="xp-squares">
-            <div className="sq sq-tl"></div>
+    <div className="xp-logo-container" style={{ margin: 0, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="xp-squares" style={{ width: '38px', height: '38px', gap: '2px' }}>
+            <div className="sq sq-tl" style={{ borderTopLeftRadius: '6px' }}></div>
             <div className="sq sq-tr"></div>
             <div className="sq sq-bl"></div>
-            <div className="sq sq-br"></div>
+            <div className="sq sq-br" style={{ borderBottomRightRadius: '6px' }}></div>
         </div>
     </div>
 );
